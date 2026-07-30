@@ -6,7 +6,7 @@ ArchSearch is an advanced academic research tool that can find papers and profes
  
 Interactive Debate Agent - Based off the research paper you uploaded, this agent asks questions regarding the research paper, ensuring you have a better understanding of the paper uploaded.
 
-PDF Uploader and Smart Summary - This agent applies keywords to handle particular pages because of token limits, and it leverages those keywords to filter the PDF papers before generating a summary derived from the filtered papers.
+PDF Uploader and Smart Summary - This agent applies keywords to handle particular pages because of token limits, and it leverages those keywords to filter the PDF papers before generating a summary derived from the filtered papers. In case you have specific keywords you want the agent to target, can you put them in the textbox, separating each one by a comma.
 
 Simulation Studio - Creates computational models and python simulation code based on the literature that has been uploaded in the pdf uploader and the parameter bounds.
 
