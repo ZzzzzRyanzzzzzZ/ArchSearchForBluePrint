@@ -102,110 +102,8 @@
             gap: 40px;
         }
 
-        #surveyOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .survey-card {
-            background: var(--card-bg);
-            padding: 35px;
-            border-radius: 14px;
-            width: 100%;
-            max-width: 420px;
-            box-shadow: var(--box-shadow);
-            border: 1px solid var(--border-color);
-            box-sizing: border-box;
-            overflow: hidden;
-        }
-
-        .survey-progress-bar {
-            width: 100%;
-            height: 6px;
-            background-color: var(--border-color);
-            border-radius: 3px;
-            margin-bottom: 25px;
-            overflow: hidden;
-        }
-
-        .survey-progress-fill {
-            width: 33%;
-            height: 100%;
-            background-color: var(--primary);
-            border-radius: 3px;
-            transition: width 0.3s ease;
-        }
-
-        .survey-card h2 {
-            margin-top: 0;
-            font-size: 20px;
-            color: var(--text-main);
-            margin-bottom: 8px;
-        }
-
-        .survey-card p {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 20px;
-        }
-
-        .survey-card label {
-            display: block;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 6px;
-            color: var(--text-main);
-        }
-
-        .survey-card input, .survey-card textarea {
-            width: 100%;
-            padding: 10px 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-size: 14px;
-            margin-bottom: 16px;
-            box-sizing: border-box;
-            outline: none;
-            background: #fafbfc;
-        }
-
-        .survey-card input:focus, .survey-card textarea:focus {
-            border-color: var(--primary);
-            background: #ffffff;
-        }
-
-        .survey-card textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .survey-card button {
-            width: 100%;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .survey-card button:hover {
-            background-color: var(--primary-hover);
-        }
-
         #mainApp {
-            display: none;
+            display: flex;
             width: 100%;
             flex-direction: column;
             gap: 40px;
@@ -443,7 +341,7 @@
         .upload-dropzone {
             border: 2px dashed var(--border-color);
             border-radius: 8px;
-            padding: 24px;
+            padding: 20px;
             text-align: center;
             background: white;
             cursor: pointer;
@@ -540,7 +438,39 @@
             text-decoration: underline;
         }
 
-        #paperModal {
+        /* Floating Clipboard Trigger Button */
+        .clipboard-fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary);
+            border: none;
+            border-radius: 50%;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .clipboard-fab:hover {
+            transform: scale(1.08);
+            background-color: var(--primary-hover);
+        }
+
+        .clipboard-fab img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+
+        /* Modal Base */
+        .modal-overlay {
             display: none;
             position: fixed;
             top: 0;
@@ -587,7 +517,7 @@
         .modal-close {
             background: none;
             border: none;
-            font-size: 20px;
+            font-size: 22px;
             cursor: pointer;
             color: var(--text-muted);
         }
@@ -667,6 +597,67 @@
             gap: 4px;
         }
 
+        /* Survey Form Styles inside Modal */
+        .survey-card h2 {
+            margin-top: 0;
+            font-size: 20px;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .survey-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .survey-card label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: var(--text-main);
+        }
+
+        .survey-card input, .survey-card textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 14px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            outline: none;
+            background: #fafbfc;
+        }
+
+        .survey-card input:focus, .survey-card textarea:focus {
+            border-color: var(--primary);
+            background: #ffffff;
+        }
+
+        .survey-card textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .survey-card button[type="submit"] {
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .survey-card button[type="submit"]:hover {
+            background-color: var(--primary-hover);
+        }
+
         @media(max-width: 1300px) {
             .app-layout {
                 grid-template-columns: 1fr;
@@ -681,37 +672,15 @@
 </head>
 <body>
 
-    <div id="surveyOverlay">
-        <div class="survey-card">
-            <div class="survey-progress-bar">
-                <div class="survey-progress-fill" id="surveyProgressFill"></div>
-            </div>
-            <h2>Welcome to ArchSearch</h2>
-            <p>Please complete this quick onboarding survey to continue.</p>
-            
-            <form id="surveyForm" onsubmit="completeSurvey(event)">
-                <label>Your Name</label>
-                <input type="text" id="surveyName" placeholder="Enter your name" required oninput="updateProgress()">
-
-                <label>Email Address</label>
-                <input type="email" id="surveyEmail" placeholder="Enter your email" required oninput="updateProgress()">
-
-                <label>What would you like more on this app?</label>
-                <textarea id="surveyFeedback" placeholder="Share your feature ideas or requests..." required oninput="updateProgress()"></textarea>
-
-                <button type="submit">Enter App</button>
-            </form>
-        </div>
-    </div>
-
-    <div id="paperModal" onclick="if(event.target === this) closePaperModal()">
+    <!-- Paper Details Modal -->
+    <div id="paperModal" class="modal-overlay" onclick="if(event.target === this) closePaperModal()">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 id="modalPaperTitle">Paper Title</h3>
                 <button class="modal-close" onclick="closePaperModal()">&times;</button>
             </div>
             <div>
-                <div class="modal-section-title">External Source Link</div>
+                <div class="modal-section-title">Direct PDF Processing & Ingestion</div>
                 <div class="modal-link-preview">
                     <p id="modalAuthorText">Author details</p>
                     <a id="modalExternalLink" href="#" target="_blank" class="action-link-btn">Open Full Paper in New Tab</a>
@@ -733,6 +702,35 @@
                 <div class="modal-section-title">Generated APA Citation</div>
                 <div class="modal-citation-box" id="modalCitation">Loading citation...</div>
             </div>
+        </div>
+    </div>
+
+    <!-- Floating Clipboard Button -->
+    <button class="clipboard-fab" onclick="openSurveyModal()" title="Open Feedback Survey">
+        <img src="clipboard.png" alt="Clipboard Icon" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'white\'><path d=\'M19 3h-4.18C14.4 1.84 13.3 1 12 1s-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm7 16H5V5h2v3h10V5h2v14z\'/></svg>'">
+    </button>
+
+    <!-- Survey Modal -->
+    <div id="surveyModal" class="modal-overlay" onclick="if(event.target === this) closeSurveyModal()">
+        <div class="modal-content survey-card">
+            <div class="modal-header">
+                <h3>Feedback & Custom Requests</h3>
+                <button class="modal-close" onclick="closeSurveyModal()">&times;</button>
+            </div>
+            <p>Share your feature ideas, bug reports, or anything you would like to see added to ArchSearch.</p>
+            
+            <form id="surveyForm" onsubmit="completeSurvey(event)">
+                <label>Your Name</label>
+                <input type="text" id="surveyName" placeholder="Enter your name" required>
+
+                <label>Email Address</label>
+                <input type="email" id="surveyEmail" placeholder="Enter your email" required>
+
+                <label>What would you like more on this app?</label>
+                <textarea id="surveyFeedback" placeholder="Share your feature ideas or requests..." required></textarea>
+
+                <button type="submit">Submit Feedback</button>
+            </form>
         </div>
     </div>
 
@@ -770,7 +768,7 @@
                                 <div class="item-card">
                                     <h4>Papers will appear here</h4>
                                     <p>Link to paper</p>
-                                    <a href="[https://openalex.org](https://openalex.org)" target="_blank" class="action-link-btn">Open Paper</a>
+                                    <a href="https://openalex.org" target="_blank" class="action-link-btn">Open Paper</a>
                                 </div>
                             </div>
                         </div>
@@ -792,7 +790,7 @@
                         <div class="panel">
                             <div class="panel-title">Debater</div>
                             <div class="chat-stream" id="chatStream">
-                                <div class="chat-bubble ai">Upload a PDF on the right to load the context. Once uploaded, I'll automatically kick off the debate with a question!</div>
+                                <div class="chat-bubble ai">Click a paper card to open details, or upload a custom PDF on the right! Once loaded, I'll automatically kick off the debate with a question.</div>
                             </div>
                             <div class="chat-input-row">
                                 <input type="text" id="debateInput" placeholder="Type your thesis or argument..." onkeypress="if(event.key === 'Enter') sendDebate()">
@@ -802,17 +800,23 @@
 
                         <div class="panel">
                             <div class="panel-title">Pdf uploader & Summary</div>
-                            <div class="panel-content" style="display:flex; flex-direction:column; gap:12px; border:none; padding:0; background:none; flex:1;">
-                                <div class="stat-box" style="padding: 8px;">
-                                    <div class="stat-number" id="statPdfStatus" style="font-size: 15px;">Idle</div>
+                            <div class="panel-content" style="display:flex; flex-direction:column; gap:10px; border:none; padding:0; background:none; flex:1;">
+                                <div class="stat-box" style="padding: 6px;">
+                                    <div class="stat-number" id="statPdfStatus" style="font-size: 14px;">Idle</div>
                                     <div class="stat-label">PDF Status</div>
                                 </div>
                                 <div class="upload-dropzone" onclick="document.getElementById('fileInput').click()">
-                                    <p style="margin:0; font-weight:500; color:#4a5568;">Click to upload or drag & drop PDF</p>
-                                    <p style="margin:5px 0 0 0; font-size:12px; color:var(--text-muted);">PDF files up to 25MB</p>
+                                    <p style="margin:0; font-weight:500; color:#4a5568; font-size:13px;">Click to upload or drag & drop PDF</p>
+                                    <p style="margin:4px 0 0 0; font-size:11px; color:var(--text-muted);">PDF files up to 25MB</p>
                                     <input type="file" id="fileInput" accept=".pdf" style="display:none" onchange="handleFileSelect(this)">
                                 </div>
                                 <div id="fileStatus" style="font-size: 12px; color: var(--primary); font-weight: 500;"></div>
+                                
+                                <div style="display:flex; flex-direction:column; gap:4px;">
+                                    <label style="font-size:11px; font-weight:600; color:var(--text-muted);">Target Focus Keywords (comma separated)</label>
+                                    <input type="text" id="pdfKeywordsInput" placeholder="e.g., methodology, results, algorithm, evaluation" style="padding:8px 10px; border:1px solid var(--border-color); border-radius:6px; font-size:12px; outline:none; background:#ffffff;">
+                                </div>
+
                                 <button style="background:var(--primary); color:white; border:none; padding:10px; border-radius:6px; font-weight:600; cursor:pointer;" onclick="uploadPdf()">Upload & Process</button>
                                 
                                 <div class="summary-box" id="summaryContainer">
@@ -853,13 +857,14 @@ if __name__ == "__main__":
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
 
         <div class="sidebar-panel">
             <h3 class="sidebar-title">Quick Guide</h3>
             <div style="font-size: 12px; color: var(--text-muted); line-height: 1.5;">
-                Click any paper card in the center panel to open its details box, view confidence scores, author breakdown, and copy citations.
+                Click any paper card in the center panel to open its details box, where you can inspect audit scores and generate APA citations.
             </div>
         </div>
 
@@ -868,34 +873,26 @@ if __name__ == "__main__":
 <script>
     const BACKEND_URL = "http://localhost:5000";
 
-    function updateProgress() {
-        const name = document.getElementById('surveyName').value.trim();
-        const email = document.getElementById('surveyEmail').value.trim();
-        const feedback = document.getElementById('surveyFeedback').value.trim();
-        
-        let filledCount = 0;
-        if (name) filledCount++;
-        if (email) filledCount++;
-        if (feedback) filledCount++;
-        
-        const percentage = (filledCount / 3) * 100;
-        document.getElementById('surveyProgressFill').style.width = Math.max(percentage, 10) + '%';
+    function openSurveyModal() {
+        document.getElementById('surveyModal').style.display = 'flex';
+    }
+
+    function closeSurveyModal() {
+        document.getElementById('surveyModal').style.display = 'none';
     }
 
     function completeSurvey(event) {
         event.preventDefault();
-        document.getElementById('surveyProgressFill').style.width = '100%';
-        setTimeout(() => {
-            document.getElementById('surveyOverlay').style.display = 'none';
-            document.getElementById('mainApp').style.display = 'flex';
-        }, 200);
+        alert("Thank you! Your feedback has been submitted successfully.");
+        document.getElementById('surveyForm').reset();
+        closeSurveyModal();
     }
 
     function openPaperModal(title, url, author) {
         document.getElementById('modalPaperTitle').innerText = title;
         document.getElementById('modalAuthorText').innerText = `Author/Source: ${author || 'OpenAlex Reference'}`;
-        document.getElementById('modalExternalLink').href = url || '[https://openalex.org](https://openalex.org)';
-        document.getElementById('modalCitation').innerText = `${author || 'Author, A.'} (2026). ${title}. OpenAlex Reference. Retrieved from ${url || '[https://openalex.org](https://openalex.org)'}`;
+        document.getElementById('modalExternalLink').href = url || 'https://openalex.org';
+        document.getElementById('modalCitation').innerText = `${author || 'Author, A.'} (2026). ${title}. OpenAlex Reference. Retrieved from ${url || 'https://openalex.org'}`;
         
         const flagsList = document.getElementById('modalFlagsList');
         const scoreVal = document.getElementById('modalScoreVal');
@@ -959,7 +956,7 @@ if __name__ == "__main__":
                         <span class="card-badge ${badgeClass}">${paper.score || "80% - Rigorous"}</span>
                         <h4>${paper.title}</h4>
                         <p>${paper.author || 'OpenAlex Repository'}</p>
-                        <a href="${paper.url || '[https://openalex.org](https://openalex.org)'}" target="_blank" class="action-link-btn" onclick="event.stopPropagation()">Open Paper</a>
+                        <a href="${paper.url || 'https://openalex.org'}" target="_blank" class="action-link-btn" onclick="event.stopPropagation()">Open Paper</a>
                     `;
                     papersContainer.appendChild(card);
                 });
@@ -1010,11 +1007,13 @@ if __name__ == "__main__":
             return;
         }
 
+        const keywords = document.getElementById('pdfKeywordsInput').value.trim();
         const formData = new FormData();
         formData.append("file", selectedFile);
+        formData.append("keywords", keywords);
 
         document.getElementById('statPdfStatus').innerText = "Analyzing...";
-        document.getElementById('summaryContainer').innerHTML = "<span style='color:var(--text-muted);'>Processing PDF and generating AI summary...</span>";
+        document.getElementById('summaryContainer').innerHTML = "<span style='color:var(--text-muted);'>Extracting keyword sections and generating AI summary...</span>";
 
         try {
             const res = await fetch(`${BACKEND_URL}/api/upload_pdf`, {
