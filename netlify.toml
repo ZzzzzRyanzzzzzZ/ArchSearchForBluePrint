@@ -1,9 +1,15 @@
 [build]
-publish = "ArchSearch/templates"
+  publish = "ArchSearch/templates"
 
 [[headers]]
-for = "/*"
-
+  for = "/*"
   [headers.values]
-  X-Content-Type-Options = "nosniff"
-  Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# --- Add this redirect rule ---
+[[redirects]]
+  from = "/api/*"
+  to = "https://your-backend-api-url.com/api/:splat"  # Replace with your actual backend URL
+  status = 200
+  force = true
