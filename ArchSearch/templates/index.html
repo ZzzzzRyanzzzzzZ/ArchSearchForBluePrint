@@ -871,9 +871,7 @@ if __name__ == "__main__":
     </div>
 
 <script>
-    const BACKEND_URL = ["localhost", "127.0.0.1"].includes(window.location.hostname)
-        ? "http://localhost:5000"
-        : "";
+    const BACKEND_URL = "";
 
     function normalizeExternalUrl(value, fallback = "https://openalex.org") {
         const markdownLink = typeof value === "string" && value.match(/^\[[^\]]+\]\((https?:\/\/[^)]+)\)$/);
