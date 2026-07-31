@@ -4,19 +4,20 @@ from openai import OpenAI
 import httpx
 import pymupdf as fitz
 import json
+import os
 import re
 import markdown
 
 app = Flask(__name__)
 CORS(app)
 
-API_KEY = "rc_5ebd1e7ad19198080c3677ebfd7c5fe8af6fafdffdf50b2e2e4d01edcea5a23a"
+API_KEY = os.environ.get("FEATHERLESS_API_KEY", "")
 MODEL = "Qwen/Qwen2.5-7B-Instruct"
 
 client = OpenAI(
     base_url="https://api.featherless.ai/v1",
     api_key=API_KEY,
-)
+) if API_KEY else None
 
 PDF_STORAGE = {
     "text": "",
@@ -46,6 +47,9 @@ def api_paperfinder():
     prompt = data.get("topic", "")
 
     try:
+        if client is None:
+            raise RuntimeError("FEATHERLESS_API_KEY is not configured")
+
         response = client.chat.completions.create(
             model=MODEL,
             max_tokens=30,
@@ -56,8 +60,11 @@ def api_paperfinder():
         )
         searchterms = response.choices[0].message.content.strip()
 
-        alex_api_key = "WlD85XJbzQmP83sj01Ebl6"
-        response3 = httpx.get("https://api.openalex.org/works", params={"search": searchterms, "per_page": 5, "api_key": alex_api_key})
+        alex_api_key = os.environ.get("OPENALEX_API_KEY")
+        openalex_params = {"search": searchterms, "per_page": 5}
+        if alex_api_key:
+            openalex_params["api_key"] = alex_api_key
+        response3 = httpx.get("https://api.openalex.org/works", params=openalex_params)
         alex_data = response3.json()
 
         paper_records = []
@@ -125,8 +132,8 @@ def api_paperfinder():
     except Exception as e:
         return jsonify({
             "error": str(e),
-            "papers": [{"title": f"Study on {prompt}", "url": "[https://openalex.org](https://openalex.org)", "author": "Dr. Research Lead", "score": "85% - High Rigor", "badge_color": "green"}],
-            "professors": [{"name": "Dr. Research Lead", "institution": "University", "field": prompt, "profile_url": "[https://openalex.org](https://openalex.org)"}],
+            "papers": [{"title": f"Study on {prompt}", "url": "https://openalex.org", "author": "Dr. Research Lead", "score": "85% - High Rigor", "badge_color": "green"}],
+            "professors": [{"name": "Dr. Research Lead", "institution": "University", "field": prompt, "profile_url": "https://openalex.org"}],
             "simulation": {
                 "description": "Fallback simulation model.",
                 "code": "import numpy as np\nimport matplotlib.pyplot as plt\n\n# Fallback simulation script\nx = np.linspace(0, 10, 100)\nplt.plot(x, np.cos(x))\nplt.show()"
@@ -143,6 +150,9 @@ def upload_pdf():
         return jsonify({"error": "Empty filename"}), 400
 
     try:
+        if client is None:
+            raise RuntimeError("FEATHERLESS_API_KEY is not configured")
+
         doc = fitz.open(stream=file.read(), filetype="pdf")
         extracted_text = ""
         for i, page in enumerate(doc):
@@ -189,6 +199,9 @@ def api_debate():
     message = data.get("message", "").strip().lower()
 
     try:
+        if client is None:
+            raise RuntimeError("FEATHERLESS_API_KEY is not configured")
+
         text_to_use = PDF_STORAGE["text"]
         if not text_to_use:
             return jsonify({"reply": "No PDF context found. Please upload a PDF file first on the right panel."})
