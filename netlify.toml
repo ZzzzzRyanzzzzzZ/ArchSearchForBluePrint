@@ -1,5 +1,6 @@
 [build]
   publish = "ArchSearch/templates"
+  functions = "netlify/functions"
 
 [[headers]]
   for = "/*"
@@ -9,6 +10,6 @@
 
 [[redirects]]
   from = "/api/*"
-  to = "https://your-backend-api-url.com/api/:splat"  # Replace with your actual backend URL
+  to = "/.netlify/functions/app/:splat"
   status = 200
   force = true
