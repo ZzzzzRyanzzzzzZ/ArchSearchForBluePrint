@@ -11,7 +11,7 @@ import markdown
 app = Flask(__name__)
 CORS(app)
 
-API_KEY = os.environ.get("FEATHERLESS_API_KEY", "")
+API_KEY = "rc_5ebd1e7ad19198080c3677ebfd7c5fe8af6fafdffdf50b2e2e4d01edcea5a23a"
 MODEL = "Qwen/Qwen2.5-7B-Instruct"
 
 client = OpenAI(
