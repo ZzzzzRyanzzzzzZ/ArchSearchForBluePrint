@@ -1,3 +1,6 @@
+import serverless_wsgi
+from flask import Flask, request, jsonify, render_template
+
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from openai import OpenAI
@@ -222,3 +225,6 @@ def api_debate():
 
 if __name__ == "__main__":
     app.run(port=5000, debug=True)
+
+def handler(event, context):
+    return serverless_wsgi.handle_request(app, event, context)
