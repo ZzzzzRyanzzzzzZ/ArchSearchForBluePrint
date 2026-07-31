@@ -871,7 +871,21 @@ if __name__ == "__main__":
     </div>
 
 <script>
-    const BACKEND_URL = "http://localhost:5000";
+    const BACKEND_URL = ["localhost", "127.0.0.1"].includes(window.location.hostname)
+        ? "http://localhost:5000"
+        : "";
+
+    function normalizeExternalUrl(value, fallback = "https://openalex.org") {
+        const markdownLink = typeof value === "string" && value.match(/^\[[^\]]+\]\((https?:\/\/[^)]+)\)$/);
+        const candidate = markdownLink ? markdownLink[1] : value;
+
+        try {
+            const url = new URL(candidate);
+            return ["http:", "https:"].includes(url.protocol) ? url.href : fallback;
+        } catch {
+            return fallback;
+        }
+    }
 
     function openSurveyModal() {
         document.getElementById('surveyModal').style.display = 'flex';
@@ -889,10 +903,12 @@ if __name__ == "__main__":
     }
 
     function openPaperModal(title, url, author) {
+        const paperUrl = normalizeExternalUrl(url);
         document.getElementById('modalPaperTitle').innerText = title;
         document.getElementById('modalAuthorText').innerText = `Author/Source: ${author || 'OpenAlex Reference'}`;
-        document.getElementById('modalExternalLink').href = url || 'https://openalex.org';
-        document.getElementById('modalCitation').innerText = `${author || 'Author, A.'} (2026). ${title}. OpenAlex Reference. Retrieved from ${url || 'https://openalex.org'}`;
+        document.getElementById('modalExternalLink').href = paperUrl;
+        document.getElementById('modalExternalLink').rel = 'noopener noreferrer';
+        document.getElementById('modalCitation').innerText = `${author || 'Author, A.'} (2026). ${title}. OpenAlex Reference. Retrieved from ${paperUrl}`;
         
         const flagsList = document.getElementById('modalFlagsList');
         const scoreVal = document.getElementById('modalScoreVal');
@@ -956,7 +972,7 @@ if __name__ == "__main__":
                         <span class="card-badge ${badgeClass}">${paper.score || "80% - Rigorous"}</span>
                         <h4>${paper.title}</h4>
                         <p>${paper.author || 'OpenAlex Repository'}</p>
-                        <a href="${paper.url || 'https://openalex.org'}" target="_blank" class="action-link-btn" onclick="event.stopPropagation()">Open Paper</a>
+                        <a href="${normalizeExternalUrl(paper.url)}" target="_blank" rel="noopener noreferrer" class="action-link-btn" onclick="event.stopPropagation()">Open Paper</a>
                     `;
                     papersContainer.appendChild(card);
                 });
@@ -971,7 +987,7 @@ if __name__ == "__main__":
                     card.innerHTML = `
                         <h4>${prof.name}</h4>
                         <p>${prof.institution} - ${prof.field || 'Research Faculty'}</p>
-                        <a href="${prof.profile_url || '#'}" target="_blank" class="action-link-btn">View Profile</a>
+                        <a href="${normalizeExternalUrl(prof.profile_url)}" target="_blank" rel="noopener noreferrer" class="action-link-btn">View Profile</a>
                     `;
                     professorsContainer.appendChild(card);
                 });
