@@ -1,8 +1,0 @@
-{
-  "builds": [
-    { "src": "workflow.py", "use": "@vercel/python" }
-  ],
-  "routes": [
-    { "src": "/(.*)", "dest": "workflow.py" }
-  ]
-}
